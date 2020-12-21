@@ -1,5 +1,5 @@
 package kelompok3;
-
+import java.util.Scanner;
 public class barang {
 
 
