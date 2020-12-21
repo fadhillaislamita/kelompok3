@@ -1,7 +1,7 @@
 package kelompok3;
 
 public class datatransaksi {
-public void getAll() {
+	public void getAll() {
 		
 	}
 	public void skuinput() {

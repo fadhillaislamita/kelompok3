@@ -1,15 +1,23 @@
 package kelompok3;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-public class masterbarang {
+
+public class masterbarang{
   
-static Connection conn;
+	static Connection conn;
 	static Statement stmt;
 	static ResultSet rs;
 	
 	Scanner input = new Scanner(System.in);
 	Scanner input1 = new Scanner(System.in);
+	
+	public static String URL = "jdbc:mysql://localhost/tb_bpl";
+	public static String USERNAME = "root";
+	public static String PASSWORD = "";
+	
+	barang barang = new barang();
 	
 	String sku;
 	String nama;
@@ -20,7 +28,7 @@ static Connection conn;
   
   //menu
   public void menu(){
-     System.out.println("\n--MENU DATA BARANG--");
+     System.out.println("\n>>>>>-MENU DATA BARANG-<<<<<");
         System.out.println("1. Tambah Barang");
         System.out.println("2. Cari Barang");
         System.out.println("3. Ubah Barang");
@@ -33,7 +41,8 @@ static Connection conn;
             Integer pilih = input1.nextInt();
             switch (pilih) {
                 case 0:
-                   
+                	user menu = new user();
+                	menu.user_pilih();
                     break;
                 case 1:
                     TambahBarang();
@@ -51,7 +60,7 @@ static Connection conn;
                 	LihatData();
                 	break;
                 default:
-                    System.out.println("Pilihan yang anda masukkan tidak valid!");
+                    System.out.println("Masukkan Pilihan Dengan Benar");
             }
         } 
         catch (Exception e) {
@@ -62,35 +71,35 @@ static Connection conn;
     	Class.forName("com.mysql.cj.jdbc.Driver");
 		conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		
-		barang brg = new barang();
-		
 		System.out.println(" ******************************************* ");
 		System.out.println(" *                TAMBAH DATA              * ");
 		System.out.println(" *******************************************\n");
 		
-		sku = brg.sku();
-		nama = brg.nama();
-		stock = brg.stock();
-		harga_beli = brg.harga_beli();
-		harga_jual = brg.harga_jual();
-       
-        try {
-            stmt = conn.createStatement();
-            String sql = "INSERT INTO barang VALUES ('"+sku+"', '"+nama+"', '"+stock+"', '"+harga_beli+"', '"+harga_jual+"')";   
+		sku = barang.sku();
+		nama = barang.nama();
+		stock = barang.stock();
+		harga_beli = barang.harga_beli();
+		harga_jual = barang.harga_jual();
+       if(stock>0) {
+           try {
+               stmt = conn.createStatement();
+               String sql = "INSERT INTO barang VALUES ('"+sku+"', '"+nama+"', '"+stock+"', '"+harga_beli+"', '"+harga_jual+"')";   
 
-            stmt.execute(sql);
-            System.out.println("\nData Berhasil Tersimpan");
-    
-        } 
-        catch (Exception e) {
-            e.printStackTrace();
-        }            
-		LihatData();
-        
+               stmt.execute(sql);
+               System.out.println("\nData Berhasil Disimpan");
+       
+           } 
+           catch (Exception e) {
+               e.printStackTrace();
+           }            
+   		LihatData();
+       }else {
+    	   System.out.println("Masukkan Stock Dengan Benar");
+    	   TambahBarang();
+       }
 	}
 	
 	//Cari Data Barang
-	@Override
 	public void CariBarang() throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -101,7 +110,7 @@ static Connection conn;
 		System.out.println("*                  CARI  DATA                *");
 		System.out.println(" ********************************************* ");
 		
-		System.out.print("Masukkan nama barang yang ingin di cari : ");
+		System.out.print("Masukkan barang yang di cari : ");
 		String cari = input.nextLine();
 
 		stmt = conn.createStatement();
@@ -111,15 +120,14 @@ static Connection conn;
 			rs = stmt.executeQuery(sql);
 			
         	if(rs.next()) { 
-        		barang n = new barang();
         		
-        		n.setSku(rs.getString("sku"));
-        		n.setNama(rs.getString("nama"));
-        		n.setStock(rs.getInt("stock"));
-        		n.setHarga_beli(rs.getInt("harga_beli"));
-        		n.setHarga_jual(rs.getInt("harga_jual"));
+        		barang.setSku(rs.getString("sku"));
+        		barang.setNama(rs.getString("nama"));
+        		barang.setStock(rs.getInt("stock"));
+        		barang.setHarga_beli(rs.getInt("harga_beli"));
+        		barang.setHarga_jual(rs.getInt("harga_jual"));
         		
-        		data.add(n);
+        		data.add(barang);
         		
 				System.out.println(" ");
          		System.out.print("  SKU");
@@ -145,28 +153,9 @@ static Connection conn;
             	}
         	}
         	else {
-        		System.out.println("\nBarang Tidak Tersedia");
+        		System.out.println("\nBarang Yang Dicari Tidak Ada");
         	}
-        	
-            System.out.println("\nCari Barang Lagi? Y/T");
-            System.out.print("Jawaban : ");
-            jwb = input.nextLine();
-            
-            if(jwb.equalsIgnoreCase("y")) {
-            	CariBarang();
-            }
-            else {
-                System.out.println("\nKembali ke Menu? Y/T");
-                System.out.print("Jawaban : ");
-                jwb = input.nextLine();
-                
-                if(jwb.equalsIgnoreCase("y")) {
-                	Menu();
-                }
-                else {
-                
-                }
-            }
+             menu();
         		
 		}
 		
@@ -177,13 +166,11 @@ static Connection conn;
 	}
 	
 	//Ubah Barang
-	@Override
 	public void UbahBarang() throws Exception {
     	Class.forName("com.mysql.cj.jdbc.Driver");
 		conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		
 		String sql;
-		barang brg = new barang();
 		
         System.out.println("\n *********************************************** ");
         System.out.println(" *                UPDATE BARANG                *");
@@ -205,7 +192,7 @@ static Connection conn;
 				case 1 : 
 					System.out.print("Masukkan SKU pada data yang ingin di ubah : ");
 					this.sku = input.nextLine();
-			        nama = brg.nama();
+			        nama = barang.nama();
 			        
 			        sql = "UPDATE barang SET nama='"+nama+"' WHERE sku='"+sku+"'";   
 			        stmt.execute(sql);
@@ -213,15 +200,20 @@ static Connection conn;
 				case 2 :
 					System.out.print("Masukkan SKU pada data yang ingin di ubah : ");
 					this.sku = input.nextLine();
-			        stock = brg.stock();
+			        stock = barang.stock();
 			        
-			        sql = "UPDATE barang SET stock='"+stock+"' WHERE sku='"+sku+"'";   
-			        stmt.execute(sql);
+			        if(stock>0) {
+				        sql = "UPDATE barang SET stock='"+stock+"' WHERE sku='"+sku+"'";   
+				        stmt.execute(sql);
+			        }else {
+			        	System.out.println("Update Stok Dengan Benar");
+			        	UbahBarang();
+			        }
 					break;
 				case 3 :
 					System.out.print("Masukkan SKU pada data yang ingin di ubah : ");
 					this.sku = input.nextLine();
-			        harga_beli = brg.harga_beli();
+			        harga_beli = barang.harga_beli();
 			        
 			        sql = "UPDATE barang SET harga_beli='"+harga_beli+"' WHERE sku='"+sku+"'";   
 			        stmt.execute(sql);
@@ -229,7 +221,7 @@ static Connection conn;
 				case 4 :
 					System.out.print("Masukkan SKU pada data yang ingin di ubah : ");
 					this.sku = input.nextLine();
-			        harga_jual = brg.harga_jual();
+			        harga_jual = barang.harga_jual();
 			        
 			        sql = "UPDATE barang SET harga_jual='"+harga_jual+"' WHERE sku='"+sku+"'";   
 			        stmt.execute(sql);
@@ -249,7 +241,6 @@ static Connection conn;
 	}
 	
 	//Hapus Data Barang
-	@Override
 	public void HapusBarang() throws Exception {
     	Class.forName("com.mysql.cj.jdbc.Driver");
 		conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -277,7 +268,6 @@ static Connection conn;
 	}
 	
 	//Melihat Data
-	@Override
 	public void LihatData() throws Exception {
     	Class.forName("com.mysql.cj.jdbc.Driver");
 		conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -290,9 +280,9 @@ static Connection conn;
         rs = stmt.executeQuery(sql);
 
         try {
-            System.out.println("\n ========================*********************************======================== ");
-            System.out.println("   ||                      DATA MASTER BARANG DI TOKO BERKAH                      ||");
-            System.out.println("   ========================*********************************======================== ");
+            System.out.println("\n =================================================================================== ");
+            System.out.println(" ||>>>>>>>>>>>>>>>>>>>>>-DATA MASTER BARANG DI TOKO BERKAH-<<<<<<<<<<<<<<<<<<<<<<<||");
+            System.out.println(" =================================================================================== ");
             
          		System.out.print("  SKU");
          		System.out.print("\t\t");
@@ -327,21 +317,8 @@ static Connection conn;
 	        	System.out.print("\t\t\t");
 	        	System.out.println("  " +barang.harga_jual);
         	}
-        	
-            System.out.println("\nKembali ke Menu? Y/T");
-            System.out.print("Jawaban : ");
-            jwb = input.nextLine();
-            
-            if(jwb.equalsIgnoreCase("y")) {
-            	Menu();
-            }
-            else {
-    
-            }
-
-        } 
-        
-        catch (Exception e) {
+            menu();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 		
