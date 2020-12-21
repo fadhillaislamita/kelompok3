@@ -106,7 +106,7 @@ public class masterbarang{
 		
 		ArrayList <barang> data = new ArrayList<>();
 		
-		System.out.println("\n ********************************************* ");
+		System.out.println("\n ******************************************* ");
 		System.out.println("*                  CARI  DATA                *");
 		System.out.println(" ********************************************* ");
 		
@@ -172,7 +172,7 @@ public class masterbarang{
 		
 		String sql;
 		
-        System.out.println("\n *********************************************** ");
+        System.out.println("\n ********************************************* ");
         System.out.println(" *                UPDATE BARANG                *");
         System.out.println(" *********************************************** ");
         
@@ -245,7 +245,7 @@ public class masterbarang{
     	Class.forName("com.mysql.cj.jdbc.Driver");
 		conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		
-		System.out.println("\n ********************************************* ");
+		System.out.println("\n ******************************************* ");
 		System.out.println("*                  HAPUS DATA                *");
 		System.out.println(" ********************************************* ");
 		System.out.print("Masukkan SKU pada data yang akan di hapus : ");
