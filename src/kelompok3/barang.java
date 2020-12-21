@@ -1,8 +1,6 @@
 package kelompok3;
 import java.util.Scanner;
 public class barang {
-
-
     private String sku;
     private String nama;
     private Integer stok;
