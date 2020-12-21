@@ -67,6 +67,7 @@ public class laporan extends koneksi{
 	        	System.out.println("\n");
 	        	menu();
 	        }
+			
 	        else {
 	        	System.out.println("\n+---------------------------------------------------------------------------------------------------------------+");
 	        	System.out.println("|                                       TAMPILAN LAPORAN PENJUALAN HARIAN                                       |");
@@ -106,6 +107,7 @@ public class laporan extends koneksi{
 		}
 
 	}
+	
 	public void laporanBulan() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
