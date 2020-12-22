@@ -105,7 +105,7 @@ public class user extends koneksi implements akun{
 
 		this.str = String.format("%tF", date);
 
-		System.out.print("Masukkan Email\t: ");
+		System.out.print("Masukkan Email\t\t: ");
 		this.email = input.next();
 
 		System.out.print("Masukkan Password\t: ");
@@ -219,7 +219,7 @@ public class user extends koneksi implements akun{
 	  		try {
 		  		String jawab;
 		  			System.out.println("Apakah Anda Ingin Keluar ? ");
-		  			System.out.println("Jawab Y/T");
+		  			System.out.print("Jawab Y/T");
 		  			jawab = input.next();
 		  			if(jawab.equalsIgnoreCase("Y")) {
 		  				System.out.println("Anda Berhasil Keluar");

@@ -31,12 +31,6 @@ public class transaksi extends datatransaksi{
 	
 	public void insertall() {
 		getAll();
-		skuinput();
-		inputprocess();
-		hasilorder();
-		input();
-		show();
-		ulang();
 	}
 	
 	public transaksi() {	
@@ -50,23 +44,9 @@ public class transaksi extends datatransaksi{
 	}
 	
 	public void noresi() {
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		try {
-			Statement stmt = conn.createStatement();
-			String sql = "SELECT * FROM transaksi";
-			ResultSet rs = stmt.executeQuery(sql);
-			id=1;
-			while(rs.next()) {
-				 id++;
-			}
-			noresi="N"+id;
-			stmt = conn.createStatement();
-			String Query = "INSERT INTO transaksi(noresi,tanggal,username) "
-					+ "VALUES ('"+noresi+"','"+date+"','"+ user +"')";
-			stmt.executeUpdate(Query);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");	
+		System.out.print("\nMasukkan No Resi : ");
+		noresi =  input.nextLine();	
 	}
 	
 	public void getAll() {
@@ -78,9 +58,10 @@ public class transaksi extends datatransaksi{
 			System.out.println("ID\t| SKU\t\t| Nama Barang \t\t| Harga\t\t| Stock");
 			id=1;
 			while(rs.next()) {
-				 System.out.println(+id +"\t| "+rs.getString("sku")+"\t\t| "  +rs.getString("nama")+"\t\t| Rp"+rs.getInt("harga_jual")+"\t| "+rs.getInt("stock"));
+				 System.out.println(+id +"\t| "+rs.getString("sku")+"\t\t| "  +rs.getString("nama")+"    \t\t| Rp"+rs.getInt("harga_jual")+"\t| "+rs.getInt("stock"));
 				 id++;
 			}
+			skuinput();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -89,7 +70,8 @@ public class transaksi extends datatransaksi{
 	public void skuinput() {
 		// TODO Auto-generated method stub
 		System.out.print("\nMasukkan Nomor SKU Barang : ");
-		skubarang =  input.next();			
+		skubarang =  input.next();
+		inputprocess();
 	}
 	public void inputprocess() {
 		String sql = "SELECT * FROM barang WHERE sku = ?";
@@ -131,12 +113,13 @@ public class transaksi extends datatransaksi{
 	        	  if(jml<=dbstock) {
 	        		  System.out.println("total pesanan : Rp"+dbhargajual);
 	        		  System.out.println("pesanan anda sedang diproses");
+	        		  hargajual=dbhargajual;
+	        		  hasilorder();
 	        	  }
 	        	  else {
 	        		  System.out.println("stok yang dimasukkan melebihi kapasitas.");
 		        	  Jumlahbarang();  
-	        	  }
-	        	  hargajual=dbhargajual;
+	        	  } 
 	          }
 	          else {
 	        	  //memasukkan kembali nilainya atau keluar
@@ -157,7 +140,8 @@ public class transaksi extends datatransaksi{
 			ResultSet rs = statement.executeQuery(sql);
 			
 	          if(rs.next()) {
-	        	  System.out.println("Nomor resi Pembelian : "+noresi);       	  
+	        	  System.out.println("Nomor resi Pembelian : "+noresi); 
+	        	  input();
 	          }
 	          else {
 	        	  System.out.println("masukkan Nomor SKU dengan tepat");
@@ -177,9 +161,23 @@ public class transaksi extends datatransaksi{
 		Statement stmt = conn.createStatement();
 		String sql = "SELECT * FROM transaksi_detail";
 		ResultSet rs = statement.executeQuery(sql);
+		int a=0;
 		id=1;
 		while(rs.next()) {
+			a=rs.getInt("id");
 			 id++;
+		}
+		while(id<=a) {
+			id++;
+		}
+
+		try {
+			stmt = conn.createStatement();
+			String Query = "INSERT INTO transaksi(noresi,tanggal,username) "
+					+ "VALUES ('"+noresi+"','"+date+"','"+ user +"')";
+			stmt.executeUpdate(Query);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		dbstock=dbstock-jml;
 		String Query = "UPDATE barang SET stock='"+dbstock+"' WHERE sku='"+skubarang+"'";
@@ -188,6 +186,7 @@ public class transaksi extends datatransaksi{
 		Query = "INSERT INTO transaksi_detail(id,sku,jumlah,harga,noresi) "
 				+ "VALUES ('"+id+"','"+ skubarang +"', '"+ jml +"', '"+ hargajual +"' , '"+ noresi +"')";
 		stmt.executeUpdate(Query);
+		show();
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
@@ -196,18 +195,17 @@ public class transaksi extends datatransaksi{
 	}
 	
 	public void show() {
-		id=1;
 		try {
 			String sql = "SELECT * FROM transaksi_detail JOIN  barang ON transaksi_detail.sku=barang.sku "
 					+ "JOIN transaksi on transaksi_detail.noresi=transaksi.noresi "
-					+ "ORDER BY tanggal DESC ";
+					+ "ORDER BY id ASC ";
 			ResultSet rs = statement.executeQuery(sql);
 			System.out.println(" Data Pesanan Barang\n");
-			System.out.println("ID\t| SKU\t| Nama Barang \t\t| Harga\t| stock");
+			System.out.println("ID\t| SKU\t| No Resi\t|Nama Barang \t\t| Harga\t\t\t| stock");
 			while(rs.next()) {
-				 System.out.println(+id +"\t| "+rs.getString("sku")+"\t| "  +rs.getString("nama")+"\t\t\t| Rp"+rs.getInt("harga")+"\t| "+rs.getInt("stock"));
-				 id++;
+				 System.out.println(+rs.getInt("id") +"\t| "+rs.getString("sku")+"\t| "  +rs.getString("noresi")+"\t\t| "  +rs.getString("nama")+"   \t| Rp"+rs.getInt("harga")+"\t\t| "+rs.getInt("stock"));
 			}
+			ulang();
 		} catch (SQLException e) {
 			System.out.println("Ada Error");
 		}
