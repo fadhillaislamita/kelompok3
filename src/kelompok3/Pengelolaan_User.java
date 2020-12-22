@@ -1,5 +1,6 @@
 package kelompok3;
 
+import java.awt.Menu;
 import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
@@ -194,7 +195,7 @@ public class Pengelolaan_User extends user{
 		 								
 		 								if (stmt.executeUpdate(query) == 1) {
 		 									System.out.println("Email Berhasil Di Ubah");
-		 									user_pilih();
+		 									pilihan();
 		 								} else{
 		 									System.out.println("Email Gagal Di Ubah");
 		 									Uedit();
@@ -302,7 +303,7 @@ public class Pengelolaan_User extends user{
 		    			+ "'"+username+"'";
 				result = stmt.executeQuery(sql); 
 				if(result.next()) {
-					System.out.println("Username\t:"+result.getString("username"));
+					System.out.println("\nUsername\t:"+result.getString("username"));
 					System.out.println("Email\t\t:"+result.getString("email"));
 					System.out.println("Password\t:"+result.getString("password"));
 					System.out.println("Login Terakhir\t:"+result.getDate("login_terakhir"));

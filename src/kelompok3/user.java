@@ -98,17 +98,17 @@ public class user extends koneksi implements akun{
 		Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-		System.out.println("\n\n--SIGN UP--");
+		System.out.println("\n\n>>>>>>>-SIGN UP-<<<<<<<");
 
-		System.out.print("Masukkan Username : ");
+		System.out.print("Masukkan Username\t: ");
 		this.username = input.next();
 
 		this.str = String.format("%tF", date);
 
-		System.out.print("Masukkan Email : ");
+		System.out.print("Masukkan Email\t: ");
 		this.email = input.next();
 
-		System.out.print("Masukkan Password : ");
+		System.out.print("Masukkan Password\t: ");
 		this.password = input.next();
 
 		// Melakukan pengecekan validitas email
@@ -199,6 +199,7 @@ public class user extends koneksi implements akun{
 	  				
 	  				case 0:
 	  					logout();
+	  					exit();
 	  					break;
 	  					
 	  				default:
@@ -209,7 +210,6 @@ public class user extends koneksi implements akun{
 	  			System.out.println("Pilihan Tidak Tersedia");
 	  			user_pilih();
 	  		}
-
 	  		scan.close();
 
 	  	}
@@ -223,13 +223,19 @@ public class user extends koneksi implements akun{
 		  			jawab = input.next();
 		  			if(jawab.equalsIgnoreCase("Y")) {
 		  				System.out.println("Anda Berhasil Keluar");
-		  				login login = new login();
-		  				login.landingPage();
 		  			}else {
 		  				user_pilih();
 		  			}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+	  	}
+	  	
+	  	public void exit() {
+	  		System.out.println("+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+");
+			System.out.println("|>>>>>>>>-Program Telah Selesai-<<<<<<<<|");
+			System.out.println("+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+");
+	  		System.exit(0);
+			
 	  	}
 }
