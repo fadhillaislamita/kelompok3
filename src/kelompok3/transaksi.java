@@ -45,6 +45,7 @@ public class transaksi extends datatransaksi{
 	
 	public void noresi() {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");	
+		System.out.println(">>>>>>>-Transaksi Barang-<<<<<<<");
 		System.out.print("\nMasukkan No Resi : ");
 		noresi =  input.nextLine();	
 	}
@@ -64,6 +65,7 @@ public class transaksi extends datatransaksi{
 			skuinput();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			menu.user_pilih();
 		}
     	
 	}
@@ -91,6 +93,7 @@ public class transaksi extends datatransaksi{
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("Ada masalah di proses inputan");
+			menu.user_pilih();
 		}
 	}
 	
@@ -130,6 +133,7 @@ public class transaksi extends datatransaksi{
 			System.out.print("Ada masalah di bagian pemrosesan jumlah");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			menu.user_pilih();
 		}
 	}
 	
@@ -153,6 +157,7 @@ public class transaksi extends datatransaksi{
 			System.out.println("Ada masalah di bagian pemrosesan order");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			menu.user_pilih();
 		}
 	}
 	
@@ -191,6 +196,7 @@ public class transaksi extends datatransaksi{
 		catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			menu.user_pilih();
 		}
 	}
 	
@@ -207,7 +213,8 @@ public class transaksi extends datatransaksi{
 			}
 			ulang();
 		} catch (SQLException e) {
-			System.out.println("Ada Error");
+			System.out.println("Ada Error Pada Method Show");
+			menu.user_pilih();
 		}
 		
 	}

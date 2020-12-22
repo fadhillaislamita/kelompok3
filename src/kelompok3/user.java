@@ -135,16 +135,19 @@ public class user extends koneksi implements akun{
 							login();
 						} else{
 							System.out.println("Data Gagal Diinputkan");
+							login.landingPage();
 						}
 						
 					} catch (SQLException e) {
 						System.out.println("Terjadi Kesalahan");
+						TambahAkun();
 					}
 
 				}
 
 			} catch (SQLException e) {
 				System.out.println("Terjadi Kesalahan");
+				TambahAkun();
 			}
 
 		} else{
@@ -219,7 +222,7 @@ public class user extends koneksi implements akun{
 	  		try {
 		  		String jawab;
 		  			System.out.println("Apakah Anda Ingin Keluar ? ");
-		  			System.out.print("Jawab Y/T");
+		  			System.out.print("Jawab Y/T? ");
 		  			jawab = input.next();
 		  			if(jawab.equalsIgnoreCase("Y")) {
 		  				System.out.println("Anda Berhasil Keluar");

@@ -113,7 +113,7 @@ public class laporan extends koneksi{
 	        conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 	        stmt = conn.createStatement();
 	        
-	        String format = "|%s\t| %s\t| %s\t| %s\t| %s\t\t| %s\t| %s\t| %s\t| %s\t|";
+	        String format = "|%s\t| %s\t| %s\t| %s\t| %s\t\t| %s\t| %s\t| %s\t| %s\t\t|";
 	        String format1 = "|%d\t| %s\t\t| %s\t|  %s\t| %s   \t|   %d\t|   %d\t|    %d\t\t| %d\t|";
 	        
 	        Bulan();
@@ -156,9 +156,9 @@ public class laporan extends koneksi{
 	          	System.out.println("\n+---------------------------------------------------------------------------------------------------------------+");
 	          	System.out.println("|                                                                                                               |");
 		        System.out.println("|                                                                                                               |");
-		        System.out.println("|Total penjualan barang Bulan Ke "+tgl+" Tahun "+tgl1+"     : "+hjual_total+"                                                                    |");
-		        System.out.println("|Total modal barang Bulan Ke "+tgl+" Tahun "+tgl1+"         : "+hbeli_total+"                                                                    |");
-		        System.out.println("|Keuntungan Bulan Ke "+tgl+" Tahun "+tgl1+"                 : "+untung+"                                                                    |");
+		        System.out.println("|Total penjualan barang Bulan Ke "+tgl+" Tahun "+tgl1+"     : "+hjual_total+"                                                     |");
+		        System.out.println("|Total modal barang Bulan Ke "+tgl+" Tahun "+tgl1+"         : "+hbeli_total+"                                                      |");
+		        System.out.println("|Keuntungan Bulan Ke "+tgl+" Tahun "+tgl1+"                 : "+untung+"                                                       |");
 		        System.out.println("+---------------------------------------------------------------------------------------------------------------+");
 		        menu();
 	        }    

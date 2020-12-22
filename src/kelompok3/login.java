@@ -26,15 +26,12 @@ public class login {
 			System.out.println("1. Login");
 			System.out.println("2. Daftar Akun");
 			System.out.print("Silakan Dipilih : ");
-			
 			pilih = input.nextInt();
 		} 
 		
 		catch (InputMismatchException e) {
 			System.out.println("Pilihan yang anda masukkan salah. Silakan coba lagi");
-			
 		}
-		
 		return pilih;
 	}
 }

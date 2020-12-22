@@ -81,23 +81,23 @@ public class masterbarang{
 		harga_beli = barang.harga_beli();
 		harga_jual = barang.harga_jual();
 		if(harga_jual>harga_beli) {
-       if(stock>0) {
-           try {
-               stmt = conn.createStatement();
-               String sql = "INSERT INTO barang VALUES ('"+sku+"', '"+nama+"', '"+stock+"', '"+harga_beli+"', '"+harga_jual+"')";   
+		       if(stock>0) {
+		           try {
+		               stmt = conn.createStatement();
+		               String sql = "INSERT INTO barang VALUES ('"+sku+"', '"+nama+"', '"+stock+"', '"+harga_beli+"', '"+harga_jual+"')";   
 
-               stmt.execute(sql);
-               System.out.println("\nData Berhasil Disimpan");
-       
-           } 
-           catch (Exception e) {
-               e.printStackTrace();
-           }            
-   		LihatData();
-       }else {
-    	   System.out.println("Masukkan Stock Dengan Benar");
-    	   TambahBarang();
-       }
+		               stmt.execute(sql);
+		               System.out.println("\nData Berhasil Disimpan");
+		       
+		           } 
+		           catch (Exception e) {
+		               e.printStackTrace();
+		           }            
+		   		LihatData();
+		       }else {
+		    	   System.out.println("Masukkan Stock Dengan Benar");
+		    	   TambahBarang();
+		       }
 		} else {
 			System.out.println("Harga Beli Lebih Besar Dari Harga Jual");
 			TambahBarang();
@@ -138,7 +138,7 @@ public class masterbarang{
          		System.out.print("  SKU");
          		System.out.print("\t\t");
          		System.out.print("  NAMA");
-         		System.out.print("\t\t");
+         		System.out.print("    \t");
          		System.out.print("  STOCK");
          		System.out.print("\t\t");
          		System.out.print("  HARGA BELI");
@@ -149,7 +149,7 @@ public class masterbarang{
     	        	System.out.print("  " +barang.sku);
     	        	System.out.print("\t\t");
     	        	System.out.print("  " +barang.nama);
-    	        	System.out.print("\t\t");
+    	        	System.out.print("   \t");
     	        	System.out.print("  " +barang.stock);
     	        	System.out.print("\t\t");
     	        	System.out.print("  " +barang.harga_beli);
@@ -225,12 +225,17 @@ public class masterbarang{
 					rs = stmt.executeQuery(sql);
 					
 					if(rs.next()) {
-			        if(harga_beli<rs.getInt("harga_jual")) {
-			        sql = "UPDATE barang SET harga_beli='"+harga_beli+"' WHERE sku='"+sku+"'";   
-			        stmt.execute(sql);
-			        } else {
-			        	System.out.println("Harga Beli Lebih Mahal Dari Harga Jual");
-			        }}
+						if(harga_beli>0) {
+					        if(harga_beli<rs.getInt("harga_jual")) {
+					        sql = "UPDATE barang SET harga_beli='"+harga_beli+"' WHERE sku='"+sku+"'";   
+					        stmt.execute(sql);
+					        } else {
+					        	System.out.println("Harga Beli Lebih Mahal Dari Harga Jual");
+					        }
+					    } else {
+					    	System.out.println("Harga Beli Tidak Bisa 0");
+					    }
+					}
 					break;
 				case 4 :
 					System.out.print("Masukkan SKU pada data yang ingin di ubah : ");
@@ -242,12 +247,18 @@ public class masterbarang{
 					rs = stmt.executeQuery(sql);
 					
 					if(rs.next()) {
-			        if(harga_jual>rs.getInt("harga_beli")) {
-			        sql = "UPDATE barang SET harga_jual='"+harga_jual+"' WHERE sku='"+sku+"'";   
-			        stmt.execute(sql);
-			        } else {
-			        	System.out.println("Harga Jual Lebih Murah Dari Harga Beli");
-			        }}
+						if(harga_beli>0) {
+					        if(harga_jual>rs.getInt("harga_beli")) {
+						        sql = "UPDATE barang SET harga_jual='"+harga_jual+"' WHERE sku='"+sku+"'";   
+						        stmt.execute(sql);
+					        } else {
+					        	System.out.println("Harga Jual Lebih Murah Dari Harga Beli");
+					        }
+					    }else {
+						    System.out.println("Harga Jual Tidak Bisa 0");
+						}
+					}
+			        
 					break;
 				default :
 					System.out.println("Pilihan Tidak Tersedia\n");
@@ -310,7 +321,7 @@ public class masterbarang{
          		System.out.print("  SKU");
          		System.out.print("\t\t");
          		System.out.print("  NAMA     ");
-         		System.out.print("\t");
+         		System.out.print("   \t");
          		System.out.print("  STOCK");
          		System.out.print("\t\t");
          		System.out.print("  HARGA BELI");
