@@ -35,7 +35,7 @@ public class laporan extends koneksi{
 			case 2:
 				laporanBulan();
 				break;
-			case 3:
+			case 0:
 				user menu = new user();
 				menu.user_pilih();
 				break;

@@ -50,11 +50,17 @@ public class transaksi extends datatransaksi{
 	}
 	
 	public void noresi() {
-		System.out.print("\nMasukkan No Resi : ");
-		noresi =  input.nextLine();	
-
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		try {
 			Statement stmt = conn.createStatement();
+			String sql = "SELECT * FROM transaksi";
+			ResultSet rs = stmt.executeQuery(sql);
+			id=1;
+			while(rs.next()) {
+				 id++;
+			}
+			noresi="N"+id;
+			stmt = conn.createStatement();
 			String Query = "INSERT INTO transaksi(noresi,tanggal,username) "
 					+ "VALUES ('"+noresi+"','"+date+"','"+ user +"')";
 			stmt.executeUpdate(Query);
